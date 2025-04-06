@@ -32,15 +32,15 @@
         }
 
         body {
-            background-color: var(--light);
-            color: var(--text-light);
+            background-color: var(--dark);
+            color: var(--text-dark);
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
         }
 
-        body.dark-mode {
-            background-color: var(--dark);
-            color: var(--text-dark);
+        body.light-mode {
+            background-color: var(--light);
+            color: var(--text-light);
         }
 
         .container {
@@ -51,14 +51,14 @@
 
         header {
             padding: 2rem 0;
-            background-color: var(--light);
-            border-bottom: 1px solid var(--border-light);
+            background-color: var(--dark);
+            border-bottom: 1px solid var(--border-dark);
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .dark-mode header {
-            background-color: var(--dark);
-            border-color: var(--border-dark);
+        .light-mode header {
+            background-color: var(--light);
+            border-color: var(--border-light);
         }
 
         .header-content {
@@ -90,7 +90,7 @@
         }
 
         .header-link {
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
@@ -99,8 +99,8 @@
             gap: 0.35rem;
         }
 
-        .dark-mode .header-link {
-            color: var(--text-dark-secondary);
+        .light-mode .header-link {
+            color: var(--text-light-secondary);
         }
 
         .header-link:hover {
@@ -110,14 +110,14 @@
         .theme-toggle {
             background: none;
             border: none;
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             cursor: pointer;
             font-size: 1.25rem;
             transition: color 0.2s;
         }
 
-        .dark-mode .theme-toggle {
-            color: var(--text-dark-secondary);
+        .light-mode .theme-toggle {
+            color: var(--text-light-secondary);
         }
 
         .theme-toggle:hover {
@@ -141,13 +141,13 @@
 
         .hero-subtitle {
             font-size: 1.25rem;
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             max-width: 800px;
             margin: 0 auto 2.5rem;
         }
 
-        .dark-mode .hero-subtitle {
-            color: var(--text-dark-secondary);
+        .light-mode .hero-subtitle {
+            color: var(--text-light-secondary);
         }
 
         .button {
@@ -173,13 +173,13 @@
 
         .button-secondary {
             background-color: transparent;
-            color: var(--text-light);
-            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            border: 1px solid var(--border-dark);
         }
 
-        .dark-mode .button-secondary {
-            color: var(--text-dark);
-            border-color: var(--border-dark);
+        .light-mode .button-secondary {
+            color: var(--text-light);
+            border-color: var(--border-light);
         }
 
         .button-secondary:hover {
@@ -197,15 +197,15 @@
 
         .download-section {
             padding: 3rem 0;
-            background-color: #f3f4f6;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
+            background-color: var(--dark-alt);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .dark-mode .download-section {
-            background-color: var(--dark-alt);
-            border-color: var(--border-dark);
+        .light-mode .download-section {
+            background-color: #f3f4f6;
+            border-color: var(--border-light);
         }
 
         .section-title {
@@ -222,10 +222,10 @@
         }
 
         .download-card {
-            background-color: white;
+            background-color: #2d3748;
             border-radius: 0.75rem;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: all 0.3s;
             display: flex;
             flex-direction: column;
@@ -233,18 +233,18 @@
             text-align: center;
         }
 
-        .dark-mode .download-card {
-            background-color: #2d3748;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        .light-mode .download-card {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .download-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .dark-mode .download-card:hover {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        .light-mode .download-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
 
         .download-icon {
@@ -260,13 +260,13 @@
         }
 
         .download-desc {
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             font-size: 0.875rem;
             margin-bottom: 1.5rem;
         }
 
-        .dark-mode .download-desc {
-            color: var(--text-dark-secondary);
+        .light-mode .download-desc {
+            color: var(--text-light-secondary);
         }
 
         .download-button {
@@ -297,12 +297,12 @@
         .feature-card {
             padding: 1.5rem;
             border-radius: 0.75rem;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-dark);
             transition: all 0.3s;
         }
 
-        .dark-mode .feature-card {
-            border-color: var(--border-dark);
+        .light-mode .feature-card {
+            border-color: var(--border-light);
         }
 
         .feature-card:hover {
@@ -323,25 +323,25 @@
         }
 
         .feature-desc {
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             font-size: 0.875rem;
         }
 
-        .dark-mode .feature-desc {
-            color: var(--text-dark-secondary);
+        .light-mode .feature-desc {
+            color: var(--text-light-secondary);
         }
 
         .screenshot-section {
             padding: 5rem 0;
-            background-color: #f3f4f6;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
+            background-color: var(--dark-alt);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .dark-mode .screenshot-section {
-            background-color: var(--dark-alt);
-            border-color: var(--border-dark);
+        .light-mode .screenshot-section {
+            background-color: #f3f4f6;
+            border-color: var(--border-light);
         }
 
         .screenshot-tabs {
@@ -356,17 +356,17 @@
             padding: 0.5rem 1rem;
             border-radius: 0.375rem;
             cursor: pointer;
-            background-color: white;
-            color: var(--text-light);
-            border: 1px solid var(--border-light);
+            background-color: #2d3748;
+            color: var(--text-dark);
+            border: 1px solid var(--border-dark);
             font-weight: 500;
             transition: all 0.2s;
         }
 
-        .dark-mode .screenshot-tab {
-            background-color: #2d3748;
-            color: var(--text-dark);
-            border-color: var(--border-dark);
+        .light-mode .screenshot-tab {
+            background-color: white;
+            color: var(--text-light);
+            border-color: var(--border-light);
         }
 
         .screenshot-tab.active {
@@ -390,7 +390,7 @@
             transition: box-shadow 0.3s;
         }
 
-        .dark-mode .screenshot-container {
+        .light-mode .screenshot-container {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
@@ -413,23 +413,23 @@
         footer {
             padding: 3rem 0;
             text-align: center;
-            background-color: var(--light);
-            border-top: 1px solid var(--border-light);
+            background-color: var(--dark);
+            border-top: 1px solid var(--border-dark);
             transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .dark-mode footer {
-            background-color: var(--dark);
-            border-color: var(--border-dark);
+        .light-mode footer {
+            background-color: var(--light);
+            border-color: var(--border-light);
         }
 
         .footer-text {
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             margin-bottom: 1.5rem;
         }
 
-        .dark-mode .footer-text {
-            color: var(--text-dark-secondary);
+        .light-mode .footer-text {
+            color: var(--text-light-secondary);
         }
 
         .social-links {
@@ -439,13 +439,13 @@
         }
 
         .social-link {
-            color: var(--text-light-secondary);
+            color: var(--text-dark-secondary);
             font-size: 1.25rem;
             transition: color 0.2s;
         }
 
-        .dark-mode .social-link {
-            color: var(--text-dark-secondary);
+        .light-mode .social-link {
+            color: var(--text-light-secondary);
         }
 
         .social-link:hover {
@@ -719,30 +719,57 @@
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
         
-        // Check for saved theme preference or default to light
+        // Default is dark mode now, check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark-mode');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            // Ensure dark mode is set by default
+            localStorage.setItem('theme', 'dark');
             themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         }
         
+        // Hero section screenshot references
+        const heroScreenshotLight = document.querySelector('.hero .screenshot[data-mode="light"]');
+        const heroScreenshotDark = document.querySelector('.hero .screenshot[data-mode="dark"]');
+        
+        // Initially set the correct hero screenshot based on theme
+        updateHeroScreenshot();
+        
         themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
                 localStorage.setItem('theme', 'light');
                 themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
+            
+            // Update hero screenshot when theme changes
+            updateHeroScreenshot();
             
             // Update screenshots visibility based on theme
             updateScreenshotModeVisibility();
         });
         
+        function updateHeroScreenshot() {
+            // Hide both screenshots first
+            heroScreenshotLight.classList.remove('active');
+            heroScreenshotDark.classList.remove('active');
+            
+            // Show the appropriate one
+            if (body.classList.contains('light-mode')) {
+                heroScreenshotLight.classList.add('active');
+            } else {
+                heroScreenshotDark.classList.add('active');
+            }
+        }
+        
         // Screenshot tab functionality
         const tabButtons = document.querySelectorAll('.screenshot-tab');
-        const screenshots = document.querySelectorAll('.screenshot');
+        const screenshots = document.querySelectorAll('.screenshot-section .screenshot');
         
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -752,16 +779,16 @@
                 // Add active class to the clicked button
                 button.classList.add('active');
                 
-                // Hide all screenshots
+                // Hide all screenshots in the screenshot section
                 screenshots.forEach(screenshot => screenshot.classList.remove('active'));
                 
                 // Show relevant screenshots based on tab and mode
                 const tab = button.getAttribute('data-tab');
-                const isDarkMode = body.classList.contains('dark-mode');
-                const mode = isDarkMode ? 'dark' : 'light';
+                const isLightMode = body.classList.contains('light-mode');
+                const mode = isLightMode ? 'light' : 'dark';
                 
                 // Find the matching screenshot
-                const activeScreenshot = document.querySelector(`.screenshot[data-tab="${tab}"][data-mode="${mode}"]`);
+                const activeScreenshot = document.querySelector(`.screenshot-section .screenshot[data-tab="${tab}"][data-mode="${mode}"]`);
                 if (activeScreenshot) {
                     activeScreenshot.classList.add('active');
                 }
@@ -771,22 +798,25 @@
         // Toggle between dark/light mode screenshots
         const modeToggleBtn = document.getElementById('toggle-mode');
         
+        // Set the initial toggle button text based on current mode
+        updateToggleButtonText(body.classList.contains('light-mode') ? 'light' : 'dark');
+        
         modeToggleBtn.addEventListener('click', () => {
             // Toggle mode for screenshots only (not the entire site)
             updateScreenshotModeVisibility(true);
-            
-            // Update the button icon
-            const screenMode = getCurrentScreenshotMode();
-            if (screenMode === 'dark') {
+        });
+        
+        function getCurrentScreenshotMode() {
+            const activeScreenshot = document.querySelector('.screenshot-section .screenshot.active');
+            return activeScreenshot ? activeScreenshot.getAttribute('data-mode') : (body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        
+        function updateToggleButtonText(mode) {
+            if (mode === 'dark') {
                 modeToggleBtn.innerHTML = '<i class="fas fa-sun"></i> Toggle Light Mode';
             } else {
                 modeToggleBtn.innerHTML = '<i class="fas fa-moon"></i> Toggle Dark Mode';
             }
-        });
-        
-        function getCurrentScreenshotMode() {
-            const activeScreenshot = document.querySelector('.screenshot.active');
-            return activeScreenshot ? activeScreenshot.getAttribute('data-mode') : 'light';
         }
         
         function updateScreenshotModeVisibility(toggle = false) {
@@ -798,26 +828,22 @@
             if (toggle) {
                 targetMode = currentMode === 'light' ? 'dark' : 'light';
             } else {
-                targetMode = body.classList.contains('dark-mode') ? 'dark' : 'light';
+                targetMode = body.classList.contains('light-mode') ? 'light' : 'dark';
             }
             
             // Hide all screenshots for this tab
-            document.querySelectorAll(`.screenshot[data-tab="${activeTab}"]`).forEach(
+            document.querySelectorAll(`.screenshot-section .screenshot[data-tab="${activeTab}"]`).forEach(
                 screenshot => screenshot.classList.remove('active')
             );
             
             // Show the screenshot with the target mode
-            const targetScreenshot = document.querySelector(`.screenshot[data-tab="${activeTab}"][data-mode="${targetMode}"]`);
+            const targetScreenshot = document.querySelector(`.screenshot-section .screenshot[data-tab="${activeTab}"][data-mode="${targetMode}"]`);
             if (targetScreenshot) {
                 targetScreenshot.classList.add('active');
             }
             
             // Update toggle button text
-            if (targetMode === 'dark') {
-                modeToggleBtn.innerHTML = '<i class="fas fa-sun"></i> Toggle Light Mode';
-            } else {
-                modeToggleBtn.innerHTML = '<i class="fas fa-moon"></i> Toggle Dark Mode';
-            }
+            updateToggleButtonText(targetMode);
         }
         
         // Initialize screenshot visibility
