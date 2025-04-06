@@ -1,0 +1,10 @@
+[package]
+name = "diskspace"
+version = "0.2.0"
+edition = "2021"
+authors = ["Original authors of diskspace crate", "System Monitor Pro Team"]
+description = "Patched version of diskspace crate that fixes non-exhaustive pattern match"
+license = "MIT"
+
+[dependencies]
+libc = "0.2"

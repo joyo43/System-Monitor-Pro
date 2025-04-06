@@ -59,3 +59,7 @@ io-kit-sys = "0.3.0"
 default = ["nvml-support"] 
 nvml-support = ["dep:nvml-wrapper"]
 custom-protocol = ["tauri/custom-protocol"]
+
+# Patch section to use our fixed version of diskspace
+[patch.crates-io]
+diskspace = { path = "../crates/diskspace-fix" }
