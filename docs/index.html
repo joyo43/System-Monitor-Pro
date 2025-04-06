@@ -1,804 +1,827 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light"> <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Monitor Pro by Joyo - Modern System Monitoring</title>
-
+    <title>System Monitor Pro - Cross-Platform System Monitoring Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS Variables for Theming --- */
         :root {
-            --font-primary: 'Poppins', sans-serif;
-            --transition-speed: 0.3s;
-            --border-radius: 6px; /* Slightly smaller radius */
-            --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* Softer shadow */
-            --box-shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.12);
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent: #ec4899;
+            --light: #f9fafb;
+            --dark: #111827;
+            --dark-alt: #1f2937;
+            --border-light: #e5e7eb;
+            --border-dark: #374151;
+            --text-light: #111827;
+            --text-light-secondary: #4b5563;
+            --text-dark: #f9fafb;
+            --text-dark-secondary: #9ca3af;
         }
 
-        [data-theme="light"] {
-            --color-bg: #f8f9fa;
-            --color-text: #212529;
-            --color-text-muted: #6c757d;
-            --color-primary: #007bff;
-            --color-primary-hover: #0056b3;
-            --color-secondary: #6c757d;
-            --color-secondary-hover: #5a6268;
-            --color-card-bg: #ffffff;
-            --color-border: #dee2e6;
-            --color-swiper-nav: rgba(0, 0, 0, 0.5);
-            --color-swiper-nav-hover: rgba(0, 0, 0, 0.8);
-        }
-
-        [data-theme="dark"] {
-            --color-bg: #1a1a1a;
-            --color-text: #e9ecef;
-            --color-text-muted: #adb5bd;
-            --color-primary: #0d6efd;
-            --color-primary-hover: #3d8bfd;
-            --color-secondary: #6c757d;
-            --color-secondary-hover: #8d969e;
-            --color-card-bg: #2c2c2c;
-            --color-border: #495057;
-            --color-swiper-nav: rgba(255, 255, 255, 0.5);
-            --color-swiper-nav-hover: rgba(255, 255, 255, 0.8);
-        }
-
-        /* --- Base Styles --- */
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
         body {
-            font-family: var(--font-primary);
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.55; /* Slightly tighter line height */
-            font-size: 15px; /* Base font size slightly smaller */
-            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
-            overflow-x: hidden;
+            background-color: var(--light);
+            color: var(--text-light);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark);
+            color: var(--text-dark);
         }
 
         .container {
-            max-width: 1100px; /* Slightly smaller max width */
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 1.5rem;
         }
 
-        section {
-            padding: 50px 0; /* Reduced section padding */
+        header {
+            padding: 2rem 0;
+            background-color: var(--light);
+            border-bottom: 1px solid var(--border-light);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
-            margin-bottom: 0.7rem; /* Reduced heading margin */
+        .dark-mode header {
+            background-color: var(--dark);
+            border-color: var(--border-dark);
         }
 
-        /* Reduced Heading Sizes */
-        h1 { font-size: 2.2rem; font-weight: 700; }
-        h2 { font-size: 1.7rem; margin-bottom: 1.2rem; text-align: center; }
-        h3 { font-size: 1.25rem; }
-
-        p {
-            margin-bottom: 0.8rem; /* Reduced paragraph margin */
-            color: var(--color-text-muted);
-            font-size: 0.95rem; /* Slightly smaller p */
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        a {
-            color: var(--color-primary);
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .header-link {
+            color: var(--text-light-secondary);
             text-decoration: none;
-            transition: color var(--transition-speed) ease;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
         }
 
-        a:hover {
-            color: var(--color-primary-hover);
+        .dark-mode .header-link {
+            color: var(--text-dark-secondary);
         }
 
-        img {
-            max-width: 100%;
+        .header-link:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-light-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .dark-mode .theme-toggle {
+            color: var(--text-dark-secondary);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            padding: 5rem 0 3rem;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light-secondary);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .dark-mode .hero-subtitle {
+            color: var(--text-dark-secondary);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .button-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .button-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-mode .button-secondary {
+            color: var(--text-dark);
+            border-color: var(--border-dark);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .download-section {
+            padding: 3rem 0;
+            background-color: #f3f4f6;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .dark-mode .download-section {
+            background-color: var(--dark-alt);
+            border-color: var(--border-dark);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .download-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .download-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .dark-mode .download-card {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .download-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .download-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-desc {
+            color: var(--text-light-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dark-mode .download-desc {
+            color: var(--text-dark-secondary);
+        }
+
+        .download-button {
+            margin-top: auto;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .download-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .features-section {
+            padding: 5rem 0;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s;
+        }
+
+        .dark-mode .feature-card {
+            border-color: var(--border-dark);
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--text-light-secondary);
+            font-size: 0.875rem;
+        }
+
+        .dark-mode .feature-desc {
+            color: var(--text-dark-secondary);
+        }
+
+        .screenshot-section {
+            padding: 5rem 0;
+            background-color: #f3f4f6;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .dark-mode .screenshot-section {
+            background-color: var(--dark-alt);
+            border-color: var(--border-dark);
+        }
+
+        .screenshot-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .screenshot-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            background-color: white;
+            color: var(--text-light);
+            border: 1px solid var(--border-light);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .dark-mode .screenshot-tab {
+            background-color: #2d3748;
+            color: var(--text-dark);
+            border-color: var(--border-dark);
+        }
+
+        .screenshot-tab.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .screenshot-tab:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .screenshot-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .dark-mode .screenshot-container {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .screenshot.active {
+            display: block;
+        }
+
+        .screenshot img {
+            width: 100%;
             height: auto;
             display: block;
         }
 
-        ul, ol {
-            padding-left: 20px;
-            margin-bottom: 0.8rem;
-        }
-
-        li {
-            margin-bottom: 0.4rem; /* Tighter list spacing */
-        }
-
-        /* --- Buttons --- */
-        .btn {
-            display: inline-block;
-            font-weight: 500; /* Slightly lighter weight */
-            text-align: center;
-            vertical-align: middle;
-            cursor: pointer;
-            border: 1px solid transparent;
-            padding: 0.6rem 1.2rem; /* Reduced button padding */
-            font-size: 0.9rem; /* Smaller button text */
-            border-radius: var(--border-radius);
-            transition: all var(--transition-speed) ease;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            color: #fff;
-            background-color: var(--color-primary);
-            border-color: var(--color-primary);
-        }
-
-        .btn-primary:hover {
-            color: #fff;
-            background-color: var(--color-primary-hover);
-            border-color: var(--color-primary-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow-hover);
-        }
-
-         .btn-secondary {
-            color: #fff;
-            background-color: var(--color-secondary);
-            border-color: var(--color-secondary);
-        }
-
-        .btn-secondary:hover {
-            color: #fff;
-            background-color: var(--color-secondary-hover);
-            border-color: var(--color-secondary-hover);
-            transform: translateY(-2px);
-            box-shadow: var(--box-shadow-hover);
-        }
-
-        .btn-outline-primary {
-            color: var(--color-primary);
-            border-color: var(--color-primary);
-            background-color: transparent;
-        }
-
-        .btn-outline-primary:hover {
-            color: #fff;
-            background-color: var(--color-primary);
-            border-color: var(--color-primary);
-        }
-
-        /* --- Theme Switcher --- */
-        .theme-switcher {
-            position: fixed;
-            top: 15px; /* Adjusted position */
-            right: 15px;
-            z-index: 1000;
-        }
-
-        .theme-switcher button {
-            background-color: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-            padding: 6px 10px; /* Smaller button */
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all var(--transition-speed) ease;
-            box-shadow: var(--box-shadow);
-            font-size: 1rem; /* Slightly smaller icon */
-        }
-
-        .theme-switcher button:hover {
-            box-shadow: var(--box-shadow-hover);
-            transform: scale(1.1);
-        }
-
-        /* --- Header/Hero Section --- */
-        .hero {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
-            color: #fff;
-            padding: 70px 0 60px 0; /* Reduced hero padding */
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero h1 {
-            margin-bottom: 0.4rem;
-            color: #fff;
-        }
-
-        .hero p.subtitle {
-            font-size: 1rem; /* Smaller subtitle */
-            margin-bottom: 1.5rem; /* Reduced space below subtitle */
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero .btn {
-            margin-top: 0.8rem;
-            padding: 0.8rem 2rem; /* Adjusted hero button padding */
-            font-size: 1rem;
-            background-color: #fff;
-            color: var(--color-primary);
-            border: none;
-        }
-        .hero .btn:hover {
-             background-color: #e9ecef;
-             color: var(--color-primary-hover);
-        }
-
-        /* --- Section Styling --- */
-        .section-bg {
-            background-color: var(--color-card-bg);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        /* --- Features Section --- */
-        #features .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Slightly smaller min card width */
-            gap: 20px; /* Reduced gap */
-            margin-top: 30px; /* Reduced margin */
-        }
-
-        .feature-card {
-            background-color: var(--color-card-bg);
-            padding: 25px; /* Reduced card padding */
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--box-shadow);
-            transition: all var(--transition-speed) ease;
-            border: 1px solid var(--color-border);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px); /* Slightly less hover effect */
-            box-shadow: var(--box-shadow-hover);
-        }
-
-        .feature-card i {
-            font-size: 2rem; /* Smaller icon */
-            color: var(--color-primary);
-            margin-bottom: 0.8rem;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: fit-content;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 0.4rem;
-            font-size: 1.1rem; /* Smaller card title */
-            color: var(--color-text);
-        }
-
-        .feature-card p {
-            color: var(--color-text-muted);
-            font-size: 0.9rem; /* Smaller card text */
-            line-height: 1.5; /* Adjust line height for smaller text */
-         }
-
-
-        /* --- Screenshots Section --- */
-        #screenshots {
-             background-color: var(--color-card-bg);
-             border-top: 1px solid var(--color-border);
-             border-bottom: 1px solid var(--color-border);
-        }
-
-        #screenshots h2 {
-            margin-bottom: 0.8rem;
-        }
-        #screenshots p {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .swiper {
-            width: 100%;
-            max-width: 750px; /* Adjusted carousel width */
-            margin: 25px auto;
-            padding-bottom: 35px; /* Adjusted space for pagination */
-        }
-
-        .swiper-slide img {
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--color-border);
-        }
-
-        .swiper-pagination-bullet-active {
-            background-color: var(--color-primary) !important;
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: var(--color-swiper-nav) !important;
-            transition: color var(--transition-speed) ease;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            width: 40px; /* Smaller nav buttons */
-            height: 40px;
-            backdrop-filter: blur(4px);
-        }
-         .swiper-button-next::after,
-        .swiper-button-prev::after{
-            font-size: 1.2rem !important; /* Smaller arrows */
-        }
-
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            color: var(--color-swiper-nav-hover) !important;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* --- Downloads Section --- */
-        .downloads-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Smaller min card width */
-            gap: 20px; /* Reduced gap */
-            margin-top: 30px;
-        }
-
-        .download-card {
-            background-color: var(--color-card-bg);
-            padding: 20px; /* Reduced padding */
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--box-shadow);
-            transition: all var(--transition-speed) ease;
-            border: 1px solid var(--color-border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .download-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--box-shadow-hover);
-        }
-
-        .download-card i { /* OS Icon */
-            font-size: 2.5rem; /* Smaller icon */
-            color: var(--color-secondary);
-            margin-bottom: 0.8rem;
-        }
-
-        .download-card h3 {
-            font-size: 1.15rem; /* Smaller title */
-            margin-bottom: 0.4rem;
-            color: var(--color-text);
-        }
-        .download-card p { /* File type/arch */
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            margin-bottom: 0.8rem;
-        }
-
-        .download-card .btn {
-            margin-top: auto;
-            width: 100%;
-            padding: 0.5rem 1rem; /* Slightly smaller button padding */
-        }
-
-        /* --- Quick Start --- */
-        #quick-start ol {
-            list-style: none;
-            padding-left: 0;
-            counter-reset: step-counter;
-            max-width: 650px; /* Adjusted width */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #quick-start li {
-            counter-increment: step-counter;
-            margin-bottom: 1.2rem; /* Adjusted spacing */
-            position: relative;
-            padding-left: 45px; /* Space for the number */
-            font-size: 1rem; /* Adjusted text size */
-        }
-         #quick-start li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: -3px; /* Adjusted vertical position */
-            width: 30px; /* Smaller number circle */
-            height: 30px;
-            background-color: var(--color-primary);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-         }
-
-        /* --- Release Notes / Feedback --- */
-        #release-notes, #feedback {
-            max-width: 750px; /* Adjusted width */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #release-notes h2, #feedback h2 {
-            text-align: left;
-        }
-
-        .release-notes details {
-            background-color: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            margin-bottom: 0.8rem;
-            padding: 12px; /* Reduced padding */
-            box-shadow: var(--box-shadow);
-        }
-
-        .release-notes summary {
-            cursor: pointer;
-            font-weight: 600; /* Adjusted weight */
-            color: var(--color-primary);
-            padding: 8px 0; /* Reduced padding */
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1rem; /* Adjusted size */
-        }
-        .release-notes summary::-webkit-details-marker { display: none; }
-
-        .release-notes summary::after {
-             content: '\f078';
-             font-family: 'Font Awesome 6 Free';
-             font-weight: 900;
-             transition: transform var(--transition-speed) ease;
-             font-size: 0.8em; /* Smaller arrow */
-         }
-        .release-notes details[open] summary::after {
-             transform: rotate(180deg);
-         }
-
-        .release-notes h3 {
-            margin-top: 1rem;
-            margin-bottom: 0.6rem;
-            font-size: 1.1rem; /* Adjusted size */
-            color: var(--color-text);
-        }
-
-        .release-notes ul {
-            margin-top: 0.4rem;
-            font-size: 0.9rem; /* Smaller list text */
-        }
-
-        #feedback p {
-            text-align: center;
-            margin-bottom: 1.2rem;
-        }
-        #feedback .feedback-cta {
-             text-align: center;
-        }
-
-        /* --- Footer --- */
         footer {
-            background-color: var(--color-card-bg);
-            color: var(--color-text-muted);
-            padding: 20px 0; /* Reduced padding */
+            padding: 3rem 0;
             text-align: center;
-            font-size: 0.85em; /* Smaller footer text */
-            border-top: 1px solid var(--color-border);
-            margin-top: 30px;
+            background-color: var(--light);
+            border-top: 1px solid var(--border-light);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
-        footer p {
-            margin-bottom: 0;
-        }
-        footer a {
-            color: var(--color-primary);
-            font-weight: 500;
+        .dark-mode footer {
+            background-color: var(--dark);
+            border-color: var(--border-dark);
         }
 
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 992px) {
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.6rem; }
-            .hero { padding: 60px 0 50px 0; }
-            .swiper { max-width: 600px; }
+        .footer-text {
+            color: var(--text-light-secondary);
+            margin-bottom: 1.5rem;
         }
 
+        .dark-mode .footer-text {
+            color: var(--text-dark-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            color: var(--text-light-secondary);
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .dark-mode .social-link {
+            color: var(--text-dark-secondary);
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+        }
+
+        /* For mobile responsiveness */
         @media (max-width: 768px) {
-            body { font-size: 14px; } /* Further reduce base font on small screens */
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.4rem; }
-            .hero { padding: 50px 0 40px 0; }
-            section { padding: 35px 0; }
-            .features-grid, .downloads-grid { grid-template-columns: 1fr; gap: 15px;}
-            .feature-card, .download-card { padding: 20px; }
-            #quick-start li { padding-left: 40px; font-size: 0.95rem;}
-            #quick-start li::before { width: 28px; height: 28px; font-size: 0.85rem; top: -2px;}
-            .swiper { max-width: 95%; }
-            .theme-switcher { top: 10px; right: 10px; }
-            .theme-switcher button { padding: 5px 8px; font-size: 0.9rem; }
-            .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
-            .hero .btn { padding: 0.7rem 1.8rem; font-size: 0.95rem;}
-        }
+            .hero-title {
+                font-size: 2rem;
+            }
 
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-links {
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div class="theme-switcher">
-        <button id="theme-toggle-button" aria-label="Toggle Theme">
-            <i class="fas fa-sun"></i>
-        </button>
-    </div>
-
-    <header class="hero">
-        <div class="container">
-            <h1 data-aos="fade-down">System Monitor Pro</h1>
-            <p class="subtitle" data-aos="fade-up" data-aos-delay="100">
-                A modern, lightweight, and powerful tool built with Rust & Tauri to monitor your system’s performance.
-            </p>
-            <a href="#downloads" class="btn" data-aos="zoom-in" data-aos-delay="200">
-                <i class="fas fa-download"></i> Get Latest Version (v0.1.8)
-            </a>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <i class="fas fa-microchip logo-icon"></i>
+                <div class="logo">System Monitor Pro</div>
+            </div>
+            <div class="header-links">
+                <a href="https://github.com/joyo43/system-monitor-pro" class="header-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://github.com/joyo43/system-monitor-pro/releases" class="header-link">
+                    <i class="fas fa-download"></i> Releases
+                </a>
+                <a href="https://github.com/joyo43/system-monitor-pro/issues" class="header-link">
+                    <i class="fas fa-bug"></i> Issues
+                </a>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main>
-        <section id="features" class="container">
-            <h2 data-aos="fade-up">Why Choose System Monitor Pro?</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <h3>Real-Time Monitoring</h3>
-                    <p>Track CPU, Memory, Disk, Network, and GPU usage instantly (details vary by OS).</p>
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-title">System Monitor Pro</h1>
+            <p class="hero-subtitle">
+                A beautiful, cross-platform system monitoring tool built with Tauri and React. 
+                Monitor your CPU, memory, GPU, disk, network, and processes in real-time with a modern interface.
+            </p>
+            <div class="buttons">
+                <a href="https://github.com/joyo43/system-monitor-pro/releases" class="button button-primary">
+                    <i class="fas fa-download"></i> Download Now
+                </a>
+                <a href="https://github.com/joyo43/system-monitor-pro" class="button button-secondary">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+            <div class="screenshot-container">
+                <div class="screenshot active" data-mode="light">
+                    <img src="overviewLight.png" alt="System Monitor Pro - Overview (Light Mode)">
                 </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>Cross-Platform</h3>
-                    <p>Native builds available for Windows, macOS (Intel & Apple Silicon), and Linux (.deb, .rpm).</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-feather-alt"></i>
-                    <h3>Lightweight</h3>
-                    <p>Built with Rust & Tauri for a minimal footprint and efficient performance.</p>
-                </div>
-                 <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                    <i class="fas fa-paint-brush"></i>
-                    <h3>Modern UI</h3>
-                    <p>Clean and intuitive interface with light/dark mode support.</p>
+                <div class="screenshot" data-mode="dark">
+                    <img src="overviewDark.png" alt="System Monitor Pro - Overview (Dark Mode)">
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="screenshots" class="section-bg">
-            <div class="container">
-                <h2 data-aos="fade-up">See It In Action</h2>
-                <p data-aos="fade-up" data-aos-delay="100">Explore the interface of System Monitor Pro. Check out both light and dark modes across different monitoring tabs.</p>
-                <div class="swiper" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="overviewLight.png" alt="Overview in Light Mode"></div>
-                        <div class="swiper-slide"><img src="overviewDark.png" alt="Overview in Dark Mode"></div>
-                        <div class="swiper-slide"><img src="cpuLight.png" alt="CPU Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="cpuDark.png" alt="CPU Monitoring in Dark Mode"></div>
-                         <div class="swiper-slide"><img src="memoryLight.png" alt="Memory Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="memoryDark.png" alt="Memory Monitoring in Dark Mode"></div>
-                         <div class="swiper-slide"><img src="diskLight.png" alt="Disk Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="diskDark.png" alt="Disk Monitoring in Dark Mode"></div>
-                         <div class="swiper-slide"><img src="networkLight.png" alt="Network Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="networkDark.png" alt="Network Monitoring in Dark Mode"></div>
-                         <div class="swiper-slide"><img src="gpuLight.png" alt="GPU Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="gpuDark.png" alt="GPU Monitoring in Dark Mode"></div>
-                         <div class="swiper-slide"><img src="processLight.png" alt="Process Monitoring in Light Mode"></div>
-                        <div class="swiper-slide"><img src="processDark.png" alt="Process Monitoring in Dark Mode"></div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+    <section class="download-section">
+        <div class="container">
+            <h2 class="section-title">Download For Your Platform</h2>
+            <div class="download-cards">
+                <div class="download-card">
+                    <i class="fab fa-windows download-icon"></i>
+                    <h3 class="download-title">Windows</h3>
+                    <p class="download-desc">For Windows 10 and newer (64-bit)</p>
+                    <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x64_en-US.msi" class="download-button">Download .msi</a>
+                </div>
+                
+                <div class="download-card">
+                    <i class="fab fa-apple download-icon"></i>
+                    <h3 class="download-title">macOS</h3>
+                    <p class="download-desc">For macOS 10.15+ (Apple Silicon)</p>
+                    <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_aarch64.dmg" class="download-button">Download .dmg</a>
+                </div>
+                
+                <div class="download-card">
+                    <i class="fab fa-ubuntu download-icon"></i>
+                    <h3 class="download-title">Ubuntu/Debian</h3>
+                    <p class="download-desc">For Debian-based Linux distributions</p>
+                    <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_amd64.deb" class="download-button">Download .deb</a>
+                </div>
+                
+                <div class="download-card">
+                    <i class="fab fa-fedora download-icon"></i>
+                    <h3 class="download-title">Fedora/RHEL</h3>
+                    <p class="download-desc">For RPM-based Linux distributions</p>
+                    <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x86_64.rpm" class="download-button">Download .rpm</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="downloads" class="container">
-            <h2 data-aos="fade-up">Download v0.1.8 (Alpha)</h2>
-            <p data-aos="fade-up" data-aos-delay="100" style="text-align: center;">Choose the right package for your operating system.</p>
-            <div class="downloads-grid">
-                <article class="download-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fab fa-windows"></i>
-                    <h3>Windows</h3>
-                    <p>(.msi Installer, x64)</p>
-                    <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x64_en-US.msi" class="btn btn-primary">
-                       <i class="fas fa-download"></i> Download
-                    </a>
-                </article>
-                <article class="download-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fab fa-apple"></i>
-                    <h3>macOS</h3>
-                    <p>(.dmg, Apple Silicon)</p>
-                     <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_aarch64.dmg" class="btn btn-primary">
-                        <i class="fas fa-download"></i> Download
-                     </a>
-                 </article>
-                 <article class="download-card" data-aos="fade-up" data-aos-delay="400">
-                     <i class="fab fa-linux"></i>
-                    <h3>Linux (.deb)</h3>
-                    <p>(Debian/Ubuntu, amd64)</p>
-                     <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_amd64.deb" class="btn btn-primary">
-                        <i class="fas fa-download"></i> Download
-                     </a>
-                 </article>
-                 <article class="download-card" data-aos="fade-up" data-aos-delay="500">
-                     <i class="fab fa-redhat"></i>
-                    <h3>Linux (.rpm)</h3>
-                     <p>(Fedora/RHEL, x86_64)</p>
-                     <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x86_64.rpm" class="btn btn-primary">
-                         <i class="fas fa-download"></i> Download
-                     </a>
-                 </article>
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <i class="fas fa-gauge-high feature-icon"></i>
+                    <h3 class="feature-title">Real-time Monitoring</h3>
+                    <p class="feature-desc">
+                        Monitor your system resources in real-time with beautiful visualizations and detailed metrics.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-microchip feature-icon"></i>
+                    <h3 class="feature-title">CPU & Memory</h3>
+                    <p class="feature-desc">
+                        Track CPU usage by core, memory allocation, and historical performance patterns.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-hard-drive feature-icon"></i>
+                    <h3 class="feature-title">Disk & Network</h3>
+                    <p class="feature-desc">
+                        Monitor disk activity, I/O operations, network interfaces, and data transfer rates.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-desktop feature-icon"></i>
+                    <h3 class="feature-title">GPU Monitoring</h3>
+                    <p class="feature-desc">
+                        View GPU usage, temperature, memory, and clock speeds for supported graphics cards.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-list feature-icon"></i>
+                    <h3 class="feature-title">Process Management</h3>
+                    <p class="feature-desc">
+                        View and manage running processes, sort by resource usage, and monitor performance over time.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-moon feature-icon"></i>
+                    <h3 class="feature-title">Dark & Light Modes</h3>
+                    <p class="feature-desc">
+                        Choose between beautiful dark and light themes to match your preference and reduce eye strain.
+                    </p>
+                </div>
             </div>
-             <p style="text-align:center; margin-top: 1.5rem;" data-aos="fade-up">
-                 Looking for other builds or versions?
-                 <a href="https://github.com/joyo43/system-monitor-pro/releases" target="_blank" rel="noopener noreferrer">View All Releases on GitHub <i class="fas fa-external-link-alt fa-xs"></i></a>
-             </p>
-        </section>
+        </div>
+    </section>
 
-
-        <section id="quick-start" class="container section-bg">
-             <h2 data-aos="fade-up">Get Started Quickly</h2>
-             <ol data-aos="fade-up" data-aos-delay="100">
-                 <li>Download the appropriate installer for your OS from the section above.</li>
-                 <li>Run the downloaded installer or executable file.</li>
-                 <li>Launch System Monitor Pro and start monitoring!</li>
-             </ol>
-         </section>
-
-
-        <section id="release-notes" class="container">
-             <h2 data-aos="fade-up">Latest Release Notes: v0.1.8 Alpha 🎉</h2>
-             <p data-aos="fade-up" data-aos-delay="100">This is the first public alpha release. It's functional but still under active development.</p>
-
-             <div class="release-notes" data-aos="fade-up" data-aos-delay="200">
-                <details>
-                     <summary>Changes, Roadmap & Feedback</summary>
-                     <div style="padding-top: 10px;">
-                        <h3>Changes in This Version (v0.1.8):</h3>
-                        <ul>
-                            <li>Configured CI/CD pipeline for automated builds.</li>
-                            <li>Resolved Linux build dependency issues.</li>
-                            <li>Basic monitoring functionality implemented.</li>
-                        </ul>
-
-                        <h3>Upcoming Features & Roadmap:</h3>
-                        <ul>
-                            <li><i class="fas fa-tasks text-muted fa-fw"></i> Detailed process views.</li>
-                            <li><i class="fas fa-chart-line text-muted fa-fw"></i> Historical data charts.</li>
-                            <li><i class="fas fa-sliders-h text-muted fa-fw"></i> Customizable UI.</li>
-                            <li><i class="fas fa-bell text-muted fa-fw"></i> User alerts.</li>
-                            <li><i class="fas fa-adjust text-muted fa-fw"></i> Full light/dark mode.</li>
-                            <li><i class="fas fa-database text-muted fa-fw"></i> Improved data accuracy.</li>
-                        </ul>
-                     </div>
-                 </details>
-             </div>
-         </section>
-
-        <section id="feedback" class="container section-bg">
-             <h2 data-aos="fade-up">Feedback Welcome!</h2>
-             <p data-aos="fade-up" data-aos-delay="100">
-                 As an alpha release, expect rough edges. Your feedback is invaluable! Please report bugs or suggest features on GitHub.
-             </p>
-             <div class="feedback-cta" data-aos="fade-up" data-aos-delay="200">
-                 <a href="https://github.com/joyo43/system-monitor-pro/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                     <i class="fab fa-github"></i> Report Bug / Request Feature
-                 </a>
-             </div>
-         </section>
-
-    </main>
+    <section class="screenshot-section">
+        <div class="container">
+            <h2 class="section-title">Screenshots</h2>
+            <div class="screenshot-tabs">
+                <button class="screenshot-tab active" data-tab="overview">Overview</button>
+                <button class="screenshot-tab" data-tab="cpu">CPU</button>
+                <button class="screenshot-tab" data-tab="memory">Memory</button>
+                <button class="screenshot-tab" data-tab="gpu">GPU</button>
+                <button class="screenshot-tab" data-tab="disk">Disk</button>
+                <button class="screenshot-tab" data-tab="network">Network</button>
+                <button class="screenshot-tab" data-tab="process">Processes</button>
+            </div>
+            
+            <div class="screenshot-container">
+                <!-- Overview -->
+                <div class="screenshot active" data-tab="overview" data-mode="light">
+                    <img src="overviewLight.png" alt="System Monitor Pro - Overview (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="overview" data-mode="dark">
+                    <img src="overviewDark.png" alt="System Monitor Pro - Overview (Dark Mode)">
+                </div>
+                
+                <!-- CPU -->
+                <div class="screenshot" data-tab="cpu" data-mode="light">
+                    <img src="cpuLight.png" alt="System Monitor Pro - CPU (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="cpu" data-mode="dark">
+                    <img src="cpuDark.png" alt="System Monitor Pro - CPU (Dark Mode)">
+                </div>
+                
+                <!-- Memory -->
+                <div class="screenshot" data-tab="memory" data-mode="light">
+                    <img src="memoryLight.png" alt="System Monitor Pro - Memory (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="memory" data-mode="dark">
+                    <img src="memoryDark.png" alt="System Monitor Pro - Memory (Dark Mode)">
+                </div>
+                
+                <!-- GPU -->
+                <div class="screenshot" data-tab="gpu" data-mode="light">
+                    <img src="gpuLight.png" alt="System Monitor Pro - GPU (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="gpu" data-mode="dark">
+                    <img src="gpuDark.png" alt="System Monitor Pro - GPU (Dark Mode)">
+                </div>
+                
+                <!-- Disk -->
+                <div class="screenshot" data-tab="disk" data-mode="light">
+                    <img src="diskLight.png" alt="System Monitor Pro - Disk (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="disk" data-mode="dark">
+                    <img src="diskDark.png" alt="System Monitor Pro - Disk (Dark Mode)">
+                </div>
+                
+                <!-- Network -->
+                <div class="screenshot" data-tab="network" data-mode="light">
+                    <img src="networkLight.png" alt="System Monitor Pro - Network (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="network" data-mode="dark">
+                    <img src="networkDark.png" alt="System Monitor Pro - Network (Dark Mode)">
+                </div>
+                
+                <!-- Processes -->
+                <div class="screenshot" data-tab="process" data-mode="light">
+                    <img src="processLight.png" alt="System Monitor Pro - Processes (Light Mode)">
+                </div>
+                <div class="screenshot" data-tab="process" data-mode="dark">
+                    <img src="processDark.png" alt="System Monitor Pro - Processes (Dark Mode)">
+                </div>
+            </div>
+            
+            <div class="mode-toggle-container" style="margin-top: 1rem; text-align: center;">
+                <button class="button button-secondary" id="toggle-mode">
+                    <i class="fas fa-moon"></i> Toggle Dark Mode
+                </button>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
-            <p>
-                Made with <i class="fas fa-heart" style="color: #dc3545;"></i> by Joyo (joyo43)
-                 | <a href="https://github.com/joyo43/system-monitor-pro" target="_blank" rel="noopener noreferrer">View on GitHub <i class="fab fa-github"></i></a>
-                 | v0.1.8 Alpha
-             </p>
+            <p class="footer-text">© 2025 System Monitor Pro. Created with Tauri and React.</p>
+            <div class="social-links">
+                <a href="https://github.com/joyo43/system-monitor-pro" class="social-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://github.com/joyo43/system-monitor-pro/issues" class="social-link">
+                    <i class="fas fa-bug"></i>
+                </a>
+                <a href="https://github.com/joyo43/system-monitor-pro/releases" class="social-link">
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 600, // Slightly faster animation
-            once: true,
-            offset: 50, // Trigger animation sooner
-        });
-
-        // Initialize Swiper
-        const swiper = new Swiper('.swiper', {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 20, // Reduced space between slides
-            centeredSlides: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-             breakpoints: {
-                640: { // Start adjusting earlier
-                    slidesPerView: 2,
-                    spaceBetween: 25
-                },
-                992: {
-                    slidesPerView: 3,
-                    spaceBetween: 30 // Keep reasonable space for 3 slides
-                }
-            }
-        });
-
-         // Theme Switcher Logic
-        const themeToggleButton = document.getElementById('theme-toggle-button');
-        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-        const lightIcon = 'fa-sun';
-        const darkIcon = 'fa-moon';
-
-        if (currentTheme) {
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            if (currentTheme === 'dark') {
-                themeToggleButton.querySelector('i').classList.remove(lightIcon);
-                themeToggleButton.querySelector('i').classList.add(darkIcon);
-            }
-        } else {
-             document.documentElement.setAttribute('data-theme', 'light');
-             // Ensure the correct icon is present on initial load if no theme is saved
-             themeToggleButton.querySelector('i').classList.remove(darkIcon); // Remove dark if present
-             themeToggleButton.querySelector('i').classList.add(lightIcon); // Add light
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         }
-
-        themeToggleButton.addEventListener('click', () => {
-            let currentTheme = document.documentElement.getAttribute('data-theme');
-            let newTheme = 'light';
-            let newIcon = lightIcon;
-
-            if (currentTheme === 'light') {
-                newTheme = 'dark';
-                newIcon = darkIcon;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
-
-            document.documentElement.setAttribute('data-theme', newTheme);
-            themeToggleButton.querySelector('i').className = `fas ${newIcon}`; // Replace classes correctly
-            localStorage.setItem('theme', newTheme);
+            
+            // Update screenshots visibility based on theme
+            updateScreenshotModeVisibility();
         });
-
+        
+        // Screenshot tab functionality
+        const tabButtons = document.querySelectorAll('.screenshot-tab');
+        const screenshots = document.querySelectorAll('.screenshot');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to the clicked button
+                button.classList.add('active');
+                
+                // Hide all screenshots
+                screenshots.forEach(screenshot => screenshot.classList.remove('active'));
+                
+                // Show relevant screenshots based on tab and mode
+                const tab = button.getAttribute('data-tab');
+                const isDarkMode = body.classList.contains('dark-mode');
+                const mode = isDarkMode ? 'dark' : 'light';
+                
+                // Find the matching screenshot
+                const activeScreenshot = document.querySelector(`.screenshot[data-tab="${tab}"][data-mode="${mode}"]`);
+                if (activeScreenshot) {
+                    activeScreenshot.classList.add('active');
+                }
+            });
+        });
+        
+        // Toggle between dark/light mode screenshots
+        const modeToggleBtn = document.getElementById('toggle-mode');
+        
+        modeToggleBtn.addEventListener('click', () => {
+            // Toggle mode for screenshots only (not the entire site)
+            updateScreenshotModeVisibility(true);
+            
+            // Update the button icon
+            const screenMode = getCurrentScreenshotMode();
+            if (screenMode === 'dark') {
+                modeToggleBtn.innerHTML = '<i class="fas fa-sun"></i> Toggle Light Mode';
+            } else {
+                modeToggleBtn.innerHTML = '<i class="fas fa-moon"></i> Toggle Dark Mode';
+            }
+        });
+        
+        function getCurrentScreenshotMode() {
+            const activeScreenshot = document.querySelector('.screenshot.active');
+            return activeScreenshot ? activeScreenshot.getAttribute('data-mode') : 'light';
+        }
+        
+        function updateScreenshotModeVisibility(toggle = false) {
+            const activeTab = document.querySelector('.screenshot-tab.active').getAttribute('data-tab');
+            const currentMode = getCurrentScreenshotMode();
+            
+            // If toggle is true, switch between modes, otherwise use the site's theme
+            let targetMode;
+            if (toggle) {
+                targetMode = currentMode === 'light' ? 'dark' : 'light';
+            } else {
+                targetMode = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            }
+            
+            // Hide all screenshots for this tab
+            document.querySelectorAll(`.screenshot[data-tab="${activeTab}"]`).forEach(
+                screenshot => screenshot.classList.remove('active')
+            );
+            
+            // Show the screenshot with the target mode
+            const targetScreenshot = document.querySelector(`.screenshot[data-tab="${activeTab}"][data-mode="${targetMode}"]`);
+            if (targetScreenshot) {
+                targetScreenshot.classList.add('active');
+            }
+            
+            // Update toggle button text
+            if (targetMode === 'dark') {
+                modeToggleBtn.innerHTML = '<i class="fas fa-sun"></i> Toggle Light Mode';
+            } else {
+                modeToggleBtn.innerHTML = '<i class="fas fa-moon"></i> Toggle Dark Mode';
+            }
+        }
+        
+        // Initialize screenshot visibility
+        updateScreenshotModeVisibility();
     </script>
 </body>
 </html>
