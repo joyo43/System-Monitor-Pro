@@ -61,7 +61,7 @@ jobs:
         if: matrix.platform == 'macos-latest'
         run: |
           brew update
-          brew install gtk+3 gtk-mac-integration pkg-config webkitgtk glib gobject-introspection
+          brew install gtk+3 gtk-mac-integration pkg-config webkit2gtk glib gobject-introspection
           brew link --force gettext
           echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile
 
@@ -94,7 +94,6 @@ jobs:
             echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           else
             echo "tag=v${{ github.event.inputs.version || '0.1.0' }}" >> $GITHUB_OUTPUT
-          fi
 
       - name: Create Release
         uses: tauri-apps/tauri-action@v0
