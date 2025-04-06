@@ -26,7 +26,6 @@ jobs:
         if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
-          # Corrected: Added libgobject-2.0-dev and ensured all needed packages are listed
           sudo apt-get install -y \
             libgtk-3-dev \
             libwebkit2gtk-4.0-dev \
@@ -34,14 +33,15 @@ jobs:
             librsvg2-dev \
             patchelf \
             libglib2.0-dev \
-            libgobject-2.0-dev \
             libayatana-appindicator3-dev \
             libsoup2.4-dev \
             libjavascriptcoregtk-4.0-dev \
             libssl-dev \
             pkg-config \
             libatk1.0-dev \
-            libcairo2-dev
+            libcairo2-dev \
+            libpango1.0-dev \
+            libdbus-1-dev
 
       - name: Setup Node
         uses: actions/setup-node@v3
