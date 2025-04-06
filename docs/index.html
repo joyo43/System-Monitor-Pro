@@ -4,76 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Monitor Pro by Joyo</title>
+    <!-- Pico.css via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <!-- Swiper CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
             background-color: #f4f4f4;
-            color: #333;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 20px;
             text-align: center;
         }
-        h1 {
-            color: #2c3e50;
+        /* Carousel Styles */
+        .swiper {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
         }
-        h2 {
-            color: #34495e;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        .button:hover {
-            background: #0056b3;
-        }
-        .downloads {
-            margin: 20px 0;
-        }
-        .downloads a {
-            display: inline-block;
-            margin: 5px;
-        }
-        .features, .quick-start, .release-notes {
-            margin: 20px 0;
-            text-align: left;
-        }
-        .features ul, .quick-start ol {
-            list-style: none;
-            padding: 0;
-        }
-        .features li, .quick-start li {
-            margin: 10px 0;
-        }
-        .screenshots {
-            margin: 20px 0;
-        }
-        .screenshots img {
+        .swiper-slide img {
             max-width: 100%;
-            margin: 10px 0;
+            height: auto;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .downloads a, .release-notes a {
+            margin: 5px;
+        }
         footer {
-            margin-top: 40px;
+            margin-top: 20px;
             font-size: 0.9em;
-            color: #777;
         }
-        footer a {
-            color: #007bff;
-            text-decoration: none;
+        /* Compact layout */
+        .features, .quick-start, .release-notes {
+            text-align: left;
         }
-        footer a:hover {
-            text-decoration: underline;
+        .features ul, .quick-start ol {
+            padding-left: 20px;
         }
     </style>
 </head>
@@ -82,6 +51,44 @@
         <h1>System Monitor Pro</h1>
         <p>A lightweight tool to monitor your system’s performance.</p>
 
+        <div class="downloads">
+            <h2>Download v0.1.8</h2>
+            <p>Choose your platform:</p>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x64_en-US.msi" class="button primary">Windows (.msi)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_aarch64.dmg" class="button primary">macOS (.dmg)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_amd64.deb" class="button primary">Linux (.deb)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x86_64.rpm" class="button primary">Linux (.rpm)</a>
+        </div>
+
+        <div class="screenshots">
+            <h2>Screenshots</h2>
+            <p>Check out System Monitor Pro in action!</p>
+            <!-- Swiper Carousel -->
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="cpuDark.png" alt="CPU Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="cpuLight.png" alt="CPU Monitoring in Light Mode"></div>
+                    <div class="swiper-slide"><img src="diskDark.png" alt="Disk Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="diskLight.png" alt="Disk Monitoring in Light Mode"></div>
+                    <div class="swiper-slide"><img src="gpuDark.png" alt="GPU Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="gpuLight.png" alt="GPU Monitoring in Light Mode"></div>
+                    <div class="swiper-slide"><img src="memoryDark.png" alt="Memory Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="memoryLight.png" alt="Memory Monitoring in Light Mode"></div>
+                    <div class="swiper-slide"><img src="networkDark.png" alt="Network Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="networkLight.png" alt="Network Monitoring in Light Mode"></div>
+                    <div class="swiper-slide"><img src="overviewDark.png" alt="Overview in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="overviewLight.png" alt="Overview in Light Mode"></div>
+                    <div class="swiper-slide"><img src="processDark.png" alt="Process Monitoring in Dark Mode"></div>
+                    <div class="swiper-slide"><img src="processLight.png" alt="Process Monitoring in Light Mode"></div>
+                </div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
         <div class="features">
             <h2>Features</h2>
             <ul>
@@ -89,23 +96,6 @@
                 <li>Cross-platform builds for Windows, macOS (Intel & Apple Silicon), and Linux (.deb, .AppImage).</li>
                 <li>Lightweight footprint.</li>
             </ul>
-        </div>
-
-        <div class="downloads">
-            <h2>Download v0.1.8</h2>
-            <p>Choose the installer for your operating system:</p>
-            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x64_en-US.msi" class="button">Windows (.msi)</a>
-            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_aarch64.dmg" class="button">macOS (.dmg)</a>
-            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_amd64.deb" class="button">Linux (.deb)</a>
-            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x86_64.rpm" class="button">Linux (.rpm)</a>
-        </div>
-
-        <div class="screenshots">
-            <h2>Screenshots</h2>
-            <p>Check out System Monitor Pro in action!</p>
-            <img src="cpuDark.png" alt="CPU Monitoring in Dark Mode">
-            <img src="memoryLight.png" alt="Memory Monitoring in Light Mode">
-            <img src="overviewDark.png" alt="Overview in Dark Mode">
         </div>
 
         <div class="quick-start">
@@ -141,7 +131,7 @@
 
             <h3>Feedback:</h3>
             <p>As an alpha release, expect rough edges and missing features. Your feedback is invaluable! Please report any bugs or suggest features by creating an issue in the repository:</p>
-            <a href="https://github.com/joyo43/system-monitor-pro/issues" class="button">Report Bug / Request Feature</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/issues" class="button secondary">Report Bug / Request Feature</a>
 
             <p>Thank you for checking out System Monitor Pro!</p>
         </div>
@@ -150,5 +140,26 @@
             <p>Made by Joyo (joyo43) | <a href="https://github.com/joyo43/system-monitor-pro">GitHub</a></p>
         </footer>
     </div>
+
+    <!-- Swiper JS via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script>
+        const swiper = new Swiper('.swiper', {
+            loop: true, // Loop through slides
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 3000, // Auto-slide every 3 seconds
+                disableOnInteraction: false,
+            },
+        });
+    </script>
 </body>
 </html>
