@@ -1,3 +1,4 @@
+# .github/workflows/build-release.yml
 name: Build and Release
 
 # Controls when the workflow will run
@@ -34,14 +35,17 @@ jobs:
         uses: actions/checkout@v4 # Use latest major version
 
       # 2. Install OS-specific dependencies (Only for Ubuntu in this common Tauri setup)
+      # Note: libappindicator3-dev is deprecated, using libayatana-appindicator3-dev instead.
+      # Removed some potentially redundant GTK deps, add back if specific crates need them.
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-20.04'
-        # These are standard prerequisites for Tauri on Debian/Ubuntu based systems
         run: |
           sudo apt-get update
           # Add the universe repository if not already enabled
-          sudo add-apt-repository universe
+          # Use -y to auto-confirm adding the repository
+          sudo add-apt-repository universe -y
           sudo apt-get update
+          # Install required packages
           sudo apt-get install -y \
             libgtk-3-dev \
             libwebkit2gtk-4.0-dev \
@@ -51,8 +55,6 @@ jobs:
             pkg-config \
             libssl-dev \
             libdbus-1-dev
-        # Removed some potentially redundant GTK deps, add back if specific crates need them
-        # Note: libappindicator3-dev is deprecated, using libayatana-appindicator3-dev instead.
 
       # macOS dependencies: Rely on Xcode Command Line Tools & native WKWebView for Tauri v2
       # Windows dependencies: Rely on WebView2 Runtime (usually pre-installed) & MSVC Build Tools (installed by Rust)
@@ -85,10 +87,9 @@ jobs:
         run: echo "PKG_CONFIG_PATH=$(brew --prefix)/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig" >> $GITHUB_ENV
 
       # 7. Determine the release tag name consistently across platforms
-      #    FIX: Added 'shell: bash' to ensure the script runs in Bash on all OSes
       - name: Determine release tag
         id: tag # Give the step an ID to reference its outputs
-        shell: bash # <<< IMPORTANT FIX for Windows/Cross-platform compatibility
+        shell: bash # <<< Use bash shell for cross-platform compatibility
         run: |
           TAG_NAME=""
           # Check if triggered by a tag push
@@ -126,10 +127,10 @@ jobs:
           releaseName: 'System Monitor Pro ${{ steps.tag.outputs.tag }} - Alpha' # Customize your app name and tag format
           releaseBody: 'See the release assets to download for your specific platform.'
           releaseDraft: true # Create a draft release first (recommended)
-          prerelease: true # Mark as a production release (set to true for pre-releases)
-          args: "--verbose" # Optional: Add verbose output for debugging
+          prerelease: true # Mark as a pre-release (set to true for pre-releases)
+          args: "--verbose" # Add verbose output for debugging build/bundle issues
           # Optional: Specify the script to run if not default 'npm run tauri build'
           # tauriScript: 'npm run build:tauri'
           # Optional: Specify paths if your project structure is non-standard
           # distPath: "../dist-frontend"
-          # iconPath: "./icons/app-icon.png"
+          # iconPath: "./icons/app-icon.png" # Assumes icons are in src-tauri/icons relative path
