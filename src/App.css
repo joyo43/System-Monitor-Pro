@@ -1,0 +1,24 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: Add any base global styles here if needed */
+body {
+  @apply bg-sci-bg-light text-sci-text-light dark:bg-sci-bg-dark dark:text-sci-text-dark transition-colors duration-300;
+  font-family: theme('fontFamily.sans');
+  overflow: hidden; /* Keep the overflow hidden */
+}
+
+/* Subtle grid background for dark mode only */
+body.dark {
+   background-image: linear-gradient(rgba(24, 32, 41, 0.3) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(24, 32, 41, 0.3) 1px, transparent 1px);
+   background-size: 20px 20px;
+}
+
+/* Custom scrollbar (optional, tailor as needed) */
+::-webkit-scrollbar { @apply w-1.5 h-1.5; }
+::-webkit-scrollbar-track { @apply bg-sci-bg-light dark:bg-sci-bg-dark; }
+::-webkit-scrollbar-thumb { @apply bg-sci-border-light dark:bg-sci-border-dark rounded; }
+::-webkit-scrollbar-thumb:hover { @apply bg-sci-text-light-secondary dark:bg-sci-text-dark-secondary; }

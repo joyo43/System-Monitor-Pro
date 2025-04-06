@@ -1,0 +1,61 @@
+# TauriViteReact/src-tauri/Cargo.toml (Corrected Merge v2)
+
+[package]
+name = "system-monitor-pro"
+version = "0.1.0"
+description = "A System Monitor built with Tauri"
+authors = ["you"]
+edition = "2024" # Using edition from original app
+license = ""
+repository = ""
+
+[lib]
+name = "system_monitor_pro_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# --- Tauri Dependencies ---
+tauri = { version = "2", features = [] } # NO extra features added unless needed
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+
+# --- Core Logic Dependencies ---
+sysinfo = "0.29.11" # Using default features as specified in source
+reqwest = { version = "0.11", features = ["blocking"] }
+nvml-wrapper = { version = "0.10.0", optional = true }
+chrono = { version = "0.4", features = ["serde"] } # Added serde feature
+log = "0.4"
+env_logger = "0.11"
+diskspace = "0.2.0"
+glob = "0.3" # <-- Added back for linux_gpu_helpers.rs
+thiserror = "1.0" # <-- Added (likely needed by copied utils/error.rs)
+
+# --- Added Dependencies ---
+tokio = { version = "1", features = ["full"] } # For async runtime
+
+# --- Platform Specific Dependencies ---
+
+# Linux-specific dependencies
+[target.'cfg(target_os = "linux")'.dependencies]
+i2c = "0.1.0"
+
+# Windows-specific dependencies
+[target.'cfg(target_os = "windows")'.dependencies]
+wmi = "0.12.1"
+windows = { version = "0.51.1", features = ["Win32_Graphics_Dxgi", "Win32_Graphics_Direct3D11", "Win32_System_Performance", "Win32_System_SystemInformation" ] }
+
+# macOS-specific dependencies
+[target.'cfg(target_os = "macos")'.dependencies]
+core-foundation = "0.9.3"
+io-kit-sys = "0.3.0"
+
+
+[features]
+# Add a feature that enables nvml-wrapper
+default = ["nvml-support"] 
+nvml-support = ["dep:nvml-wrapper"]
+custom-protocol = ["tauri/custom-protocol"]
