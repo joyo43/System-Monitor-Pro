@@ -14,6 +14,7 @@ on:
 permissions:
   contents: write
   packages: write
+  issues: write
 
 jobs:
   build:
@@ -37,17 +38,24 @@ jobs:
             librsvg2-dev \
             patchelf \
             libglib2.0-dev \
+            libglib2.0-0 \
+            libcairo2-dev \
+            libpango1.0-dev \
+            libatk1.0-dev \
+            libgdk-pixbuf2.0-dev \
             libayatana-appindicator3-dev \
             libsoup2.4-dev \
             libjavascriptcoregtk-4.0-dev \
             libssl-dev \
             pkg-config \
-            libatk1.0-dev \
-            libcairo2-dev \
-            libpango1.0-dev \
             libdbus-1-dev \
+            libgirepository1.0-dev \
             libgpgme-dev \
-            libgirepository1.0-dev
+            gobject-introspection \
+            libgtksourceview-3.0-dev \
+            gir1.2-gtk-3.0 \
+            gir1.2-soup-2.4 \
+            gir1.2-webkit2-4.0
 
       - name: Install dependencies (macOS)
         if: matrix.platform == 'macos-latest'
@@ -88,7 +96,7 @@ jobs:
             echo "tag=v${{ github.event.inputs.version || '0.1.0' }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build Tauri App
+      - name: Create Release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
