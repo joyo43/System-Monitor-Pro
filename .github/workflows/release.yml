@@ -43,14 +43,14 @@ jobs:
           sudo apt-get install -y \
             libgtk-3-dev \
             libwebkit2gtk-4.0-dev \
-            libayatana-appindicator3-dev \ # Use libayatana for modern Ubuntu/Gnome
+            libayatana-appindicator3-dev \ 
             librsvg2-dev \
             patchelf \
             pkg-config \
             libssl-dev \
             libdbus-1-dev
-            # Removed some potentially redundant GTK deps, add back if specific crates need them
-        # Note: libappindicator3-dev is deprecated, using libayatana-appindicator3-dev instead.
+        # Removed some potentially redundant GTK deps, add back if specific crates need them <--- PROBLEM
+        # Note: libappindicator3-dev is deprecated, using libayatana-appindicator3-dev instead. <--- PROBLEM
 
       # macOS dependencies: Rely on Xcode Command Line Tools & native WKWebView for Tauri v2
       # Windows dependencies: Rely on WebView2 Runtime (usually pre-installed) & MSVC Build Tools (installed by Rust)
@@ -125,6 +125,7 @@ jobs:
           releaseBody: 'See the release assets to download for your specific platform.'
           releaseDraft: true # Create a draft release first (recommended)
           prerelease: true # Mark as a production release (set to true for pre-releases)
+          args: "--verbose" # Optional: Add verbose output for debugging
           # Optional: Specify the script to run if not default 'npm run tauri build'
           # tauriScript: 'npm run build:tauri'
           # Optional: Specify paths if your project structure is non-standard
