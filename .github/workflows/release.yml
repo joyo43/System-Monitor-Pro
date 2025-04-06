@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4 # Use latest major version
 
       # 2. Install OS-specific dependencies (Only for Ubuntu in this common Tauri setup)
-      # Note: libappindicator3-dev is deprecated, using libayatana-appindicator3-dev instead.
+      # Note: Using libayatana-appindicator3-dev for modern tray icon support instead of the deprecated libappindicator3-dev.
       # Removed some potentially redundant GTK deps, add back if specific crates need them.
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-20.04'
