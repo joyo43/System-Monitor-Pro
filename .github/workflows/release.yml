@@ -23,7 +23,7 @@ jobs:
       fail-fast: false # Ensure all platforms attempt to build even if one fails
       matrix:
         # Define the platforms to build on
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        platform: [macos-latest, ubuntu-22.04, windows-latest]
         # Consider using more specific versions like ubuntu-22.04 if needed
 
     # Use the matrix platform for the runner OS
@@ -36,7 +36,7 @@ jobs:
 
       # 2. Install OS-specific dependencies (Only for Ubuntu in this common Tauri setup)
       - name: Install dependencies (Ubuntu)
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo add-apt-repository universe -y
@@ -65,7 +65,7 @@ jobs:
 
       # 6. Set PKG_CONFIG_PATH (Optional but helpful for some crates on Linux/macOS)
       - name: Set PKG_CONFIG_PATH (Ubuntu)
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.platform == 'ubuntu-22.04'
         run: echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
 
       - name: Set PKG_CONFIG_PATH (macOS)
