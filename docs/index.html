@@ -3,29 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Monitor Pro</title>
+    <title>System Monitor Pro by Joyo</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #333; }
-        .button { padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-        .button:hover { background: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #34495e;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .downloads {
+            margin: 20px 0;
+        }
+        .downloads a {
+            display: inline-block;
+            margin: 5px;
+        }
+        .features, .quick-start, .release-notes {
+            margin: 20px 0;
+            text-align: left;
+        }
+        .features ul, .quick-start ol {
+            list-style: none;
+            padding: 0;
+        }
+        .features li, .quick-start li {
+            margin: 10px 0;
+        }
+        .screenshots {
+            margin: 20px 0;
+        }
+        .screenshots img {
+            max-width: 100%;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <h1>System Monitor Pro</h1>
-    <p>A lightweight tool to monitor your system’s performance.</p>
-    <h2>Features</h2>
-    <ul style="list-style: none; padding: 0;">
-        <li>Real-time CPU usage</li>
-        <li>Memory tracking</li>
-        <li>Simple interface</li>
-    </ul>
-    <h2>Download</h2>
-    <p><a href="https://github.com/joyo43/system-monitor-pro/releases/tag/v0.1.8" class="button">Get v0.1.8</a></p>
-    <h2>Quick Start</h2>
-    <p>1. Download the release.<br>2. Run the executable.<br>3. Monitor away!</p>
-    <footer>
-        <p>Made by joyo43 | <a href="https://github.com/joyo43/system-monitor-pro">GitHub</a></p>
-    </footer>
+    <div class="container">
+        <h1>System Monitor Pro</h1>
+        <p>A lightweight tool to monitor your system’s performance.</p>
+
+        <div class="features">
+            <h2>Features</h2>
+            <ul>
+                <li>Basic real-time monitoring for CPU, Memory, Disk, Network, and GPU (details may vary by OS).</li>
+                <li>Cross-platform builds for Windows, macOS (Intel & Apple Silicon), and Linux (.deb, .AppImage).</li>
+                <li>Lightweight footprint.</li>
+            </ul>
+        </div>
+
+        <div class="downloads">
+            <h2>Download v0.1.8</h2>
+            <p>Choose the installer for your operating system:</p>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x64_en-US.msi" class="button">Windows (.msi)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_aarch64.dmg" class="button">macOS (.dmg)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_amd64.deb" class="button">Linux (.deb)</a>
+            <a href="https://github.com/joyo43/system-monitor-pro/releases/download/v0.1.8/system-monitor-pro_0.1.0_x86_64.rpm" class="button">Linux (.rpm)</a>
+        </div>
+
+        <div class="screenshots">
+            <h2>Screenshots</h2>
+            <p>Check out System Monitor Pro in action!</p>
+            <img src="cpuDark.png" alt="CPU Monitoring in Dark Mode">
+            <img src="memoryLight.png" alt="Memory Monitoring in Light Mode">
+            <img src="overviewDark.png" alt="Overview in Dark Mode">
+        </div>
+
+        <div class="quick-start">
+            <h2>Quick Start</h2>
+            <ol>
+                <li>Download the appropriate installer for your operating system above.</li>
+                <li>Run the executable.</li>
+                <li>Monitor away!</li>
+            </ol>
+        </div>
+
+        <div class="release-notes">
+            <h2>System Monitor Pro v0.1.8 - Alpha Release 🎉</h2>
+            <p>This is the first public alpha release of System Monitor Pro!</p>
+            <p>System Monitor Pro aims to be a modern, lightweight, and powerful system monitoring application built with Rust, Tauri, and React. This version establishes the core build process and includes initial monitoring capabilities.</p>
+            
+            <h3>Changes in This Version:</h3>
+            <ul>
+                <li>Successfully configured the CI/CD pipeline for automated builds and releases across all target platforms.</li>
+                <li>Resolved various dependency issues for the Linux build environment.</li>
+            </ul>
+
+            <h3>Upcoming Features & Roadmap:</h3>
+            <ul>
+                <li>Detailed process views and management.</li>
+                <li>Historical data charts and logging.</li>
+                <li>Customizable dashboards and UI elements.</li>
+                <li>User-configurable alerts.</li>
+                <li>Full light and dark mode support.</li>
+                <li>Improved data accuracy and more detailed metrics.</li>
+                <li>And much more!</li>
+            </ul>
+
+            <h3>Feedback:</h3>
+            <p>As an alpha release, expect rough edges and missing features. Your feedback is invaluable! Please report any bugs or suggest features by creating an issue in the repository:</p>
+            <a href="https://github.com/joyo43/system-monitor-pro/issues" class="button">Report Bug / Request Feature</a>
+
+            <p>Thank you for checking out System Monitor Pro!</p>
+        </div>
+
+        <footer>
+            <p>Made by Joyo (joyo43) | <a href="https://github.com/joyo43/system-monitor-pro">GitHub</a></p>
+        </footer>
+    </div>
 </body>
 </html>
