@@ -1,112 +1,133 @@
+# .github/workflows/build-release.yml
 name: Build and Release
 
+# Controls when the workflow will run
 on:
   push:
     tags:
-      - 'v*'
-  workflow_dispatch:
+      - 'v*' # Trigger on version tags like v0.1.0, v1.2.3 etc.
+  workflow_dispatch: # Allow manual trigger
     inputs:
       version:
-        description: 'Version number 0.1.0'
+        description: 'Manual Version Tag (e.g., v0.1.0)' # Ensure tag format consistency
         required: true
-        default: '0.1.0'
+        default: 'v0.1.0' # Default including 'v'
 
+# Permissions required by the jobs
 permissions:
-  contents: write
-  packages: write
-  issues: write
+  contents: write # Needed for tauri-action to create releases
 
 jobs:
   build:
     strategy:
-      fail-fast: false
+      fail-fast: false # Ensure all platforms attempt to build even if one fails
       matrix:
+        # Define the platforms to build on
         platform: [macos-latest, ubuntu-20.04, windows-latest]
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        # Consider using more specific versions like ubuntu-22.04 if needed
 
+    # Use the matrix platform for the runner OS
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      # 1. Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Use latest major version
+
+      # 2. Install OS-specific dependencies (Only for Ubuntu in this common Tauri setup)
+      # Note: Using libayatana-appindicator3-dev for modern tray icon support instead of the deprecated libappindicator3-dev.
+      # Removed some potentially redundant GTK deps, add back if specific crates need them.
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
+          sudo add-apt-repository universe -y
+          sudo apt-get update
           sudo apt-get install -y \
             libgtk-3-dev \
             libwebkit2gtk-4.0-dev \
-            libappindicator3-dev \
+            libayatana-appindicator3-dev \
             librsvg2-dev \
             patchelf \
-            libglib2.0-dev \
-            libglib2.0-0 \
-            libcairo2-dev \
-            libpango1.0-dev \
-            libatk1.0-dev \
-            libgdk-pixbuf2.0-dev \
-            libayatana-appindicator3-dev \
-            libsoup2.4-dev \
-            libjavascriptcoregtk-4.0-dev \
-            libssl-dev \
             pkg-config \
-            libdbus-1-dev \
-            libgirepository1.0-dev \
-            libgpgme-dev \
-            gobject-introspection \
-            libgtksourceview-3.0-dev \
-            gir1.2-gtk-3.0 \
-            gir1.2-soup-2.4 \
-            gir1.2-webkit2-4.0 \
-            libgirepository1.0-dev \
-            libglib2.0-dev-bin \
-            gobject-introspection \
-            libgirepository1.0-dev
+            libssl-dev \
+            libdbus-1-dev
 
-      - name: Install dependencies (macOS)
-        if: matrix.platform == 'macos-latest'
-        run: |
-          brew update
-          brew install gtk+3 gtk-mac-integration pkg-config webkitgtk glib gobject-introspection
-          brew link --force gettext
-          echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile
+      # macOS dependencies: Rely on Xcode Command Line Tools & native WKWebView for Tauri v2
+      # Windows dependencies: Rely on WebView2 Runtime (usually pre-installed) & MSVC Build Tools (installed by Rust)
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      # 3. Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4 # Use latest major version
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: 18 # Specify your project's Node version
+          cache: 'npm' # Enable caching for npm dependencies
 
-      - name: Install Rust stable
+      # 4. Install Rust toolchain
+      - name: Install Rust stable toolchain
         uses: dtolnay/rust-toolchain@stable
+        # You can add components if needed: components: clippy, rustfmt
 
-      - name: Install dependencies
+      # 5. Install frontend dependencies
+      - name: Install frontend dependencies
+        # Use 'npm ci' for deterministic installs in CI environment
         run: npm ci
 
-      - name: Set PKG_CONFIG_PATH for Ubuntu
+      # 6. Set PKG_CONFIG_PATH (Optional but helpful for some crates on Linux/macOS)
+      - name: Set PKG_CONFIG_PATH (Ubuntu)
         if: matrix.platform == 'ubuntu-20.04'
-        run: |
-          echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
+        run: echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
 
-      - name: Set PKG_CONFIG_PATH for macOS
+      - name: Set PKG_CONFIG_PATH (macOS)
         if: matrix.platform == 'macos-latest'
-        run: |
-          echo "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig" >> $GITHUB_ENV
+        # Point to common Homebrew paths if installed, adjust if needed
+        run: echo "PKG_CONFIG_PATH=$(brew --prefix)/lib/pkgconfig:/usr/local/opt/libffi/lib/pkgconfig" >> $GITHUB_ENV
 
-      - name: Set release tag
-        id: tag
+      # 7. Determine the release tag name consistently across platforms
+      - name: Determine release tag
+        id: tag # Give the step an ID to reference its outputs
+        shell: bash # <<< Use bash shell for cross-platform compatibility
         run: |
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          TAG_NAME=""
+          # Check if triggered by a tag push
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            TAG_NAME="${GITHUB_REF#refs/tags/}"
+            echo "Using tag from GITHUB_REF: $TAG_NAME"
+          # Check if triggered manually and input provided
+          elif [[ -n "${{ github.event.inputs.version }}" ]]; then
+            TAG_NAME="${{ github.event.inputs.version }}"
+            # Ensure 'v' prefix if missing from manual input
+            if [[ ! $TAG_NAME == v* ]]; then
+              TAG_NAME="v$TAG_NAME"
+              echo "Added 'v' prefix to manual input tag."
+            fi
+            echo "Using tag from manual input: $TAG_NAME"
           else
-            echo "tag=v${{ github.event.inputs.version || '0.1.0' }}" >> $GITHUB_OUTPUT
+            # Fallback if neither condition is met (should not happen with current triggers)
+            echo "Error: Could not determine release tag."
+            exit 1
           fi
+          # Set the output for use in later steps
+          echo "tag=${TAG_NAME}" >> $GITHUB_OUTPUT
 
-      - name: Create Release
-        uses: tauri-apps/tauri-action@v0
+      # 8. Build the Tauri application and create a GitHub Release
+      - name: Build and Release with Tauri Action
+        # RECOMMENDATION: Check tauri-apps/tauri-action repo for the latest version compatible with Tauri v2
+        uses: tauri-apps/tauri-action@v0 # Using v0 for now, verify and update if needed (e.g., @v1)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Add any build-time environment variables your app needs here
+          # Example: VITE_API_URL: ${{ secrets.API_URL }}
         with:
-          tagName: ${{ steps.tag.outputs.tag }}
-          releaseName: 'System Monitor Pro ${{ steps.tag.outputs.tag }}'
+          # Use the tag determined in the previous step
+          tagName: ${{ steps.tag.outputs.tag }} # Format example: v0.1.0
+          releaseName: 'System Monitor Pro ${{ steps.tag.outputs.tag }} - Alpha' # Customize your app name and tag format
           releaseBody: 'See the release assets to download for your specific platform.'
-          releaseDraft: true
-          prerelease: false
+          releaseDraft: true # Create a draft release first (recommended)
+          prerelease: true # Mark as a pre-release (set to true for pre-releases)
+          args: "--verbose" # Add verbose output for debugging build/bundle issues
+          # Optional: Specify the script to run if not default 'npm run tauri build'
+          # tauriScript: 'npm run build:tauri'
+          # Optional: Specify paths if your project structure is non-standard
+          # distPath: "../dist-frontend"
+          # iconPath: "./icons/app-icon.png" # Assumes icons are in src-tauri/icons relative path
