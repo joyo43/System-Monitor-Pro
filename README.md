@@ -78,7 +78,7 @@ System Monitor Pro is a high-performance desktop application that provides real-
 ## Screenshots
 
 <div align="center">
-<em>Screenshots coming soon!</em>
+Visit our <a href="https://joyo43.github.io/system-monitor-pro/" target="_blank">official website</a> to see screenshots and learn more about System Monitor Pro.
 </div>
 
 ## Installation
@@ -90,24 +90,9 @@ System Monitor Pro is a high-performance desktop application that provides real-
 
 ### Download
 
-Pre-built binaries are available for all major platforms:
+**Visit our [official website](https://joyo43.github.io/system-monitor-pro/) to download System Monitor Pro for your platform.**
 
-- [Windows (.exe, .msi)](https://github.com/joyo/system-monitor-pro/releases)
-- [macOS (.dmg, .app)](https://github.com/joyo/system-monitor-pro/releases)
-- [Linux (.AppImage, .deb, .rpm)](https://github.com/joyo/system-monitor-pro/releases)
-
-Or install via package managers:
-
-```bash
-# macOS (using Homebrew)
-brew install system-monitor-pro
-
-# Windows (using Scoop)
-scoop install system-monitor-pro
-
-# Linux (using AUR on Arch)
-yay -S system-monitor-pro
-```
+We provide builds for Windows, macOS, and Linux operating systems in various formats to suit your needs.
 
 ## Development
 
@@ -139,13 +124,28 @@ Different platforms require specific dependencies:
     libgtk-3-dev \
     libayatana-appindicator3-dev \
     librsvg2-dev
+  
+  # Fedora
+  sudo dnf install webkit2gtk4.0-devel \
+    openssl-devel \
+    gtk3-devel \
+    libappindicator-gtk3-devel \
+    librsvg2-devel
+  
+  # Arch Linux
+  sudo pacman -S webkit2gtk \
+    base-devel \
+    openssl \
+    gtk3 \
+    libappindicator-gtk3 \
+    librsvg
   ```
 
 ### Building From Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/joyo/system-monitor-pro.git
+git clone https://github.com/joyo43/system-monitor-pro.git
 cd system-monitor-pro
 
 # Install dependencies
@@ -159,6 +159,13 @@ npm run tauri build
 ```
 
 The production build will create installers in the `src-tauri/target/release/bundle` directory.
+
+### Troubleshooting Common Issues
+
+- **Build errors related to Rust dependencies**: Try running `cargo clean` in the `src-tauri` directory.
+- **Missing WebView2**: On Windows, ensure you've installed the WebView2 runtime.
+- **Linux build failures**: Make sure you've installed all required development packages for your distribution.
+- **Performance issues in dev mode**: This is normal - production builds are significantly more optimized.
 
 ## Project Structure
 
@@ -214,5 +221,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
 Made with ❤️ by joyo
   
-[Report Bug](https://github.com/joyo/system-monitor-pro/issues) · [Request Feature](https://github.com/joyo/system-monitor-pro/issues)
+[Report Bug](https://github.com/joyo/system-monitor-pro/issues) · [Request Feature](https://github.com/joyo/system-monitor-pro/issues) · [Website](https://joyo43.github.io/system-monitor-pro/)
 </div>
